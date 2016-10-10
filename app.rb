@@ -1,5 +1,5 @@
 require 'sinatra'
-
+require 'sendgrid-ruby'
 
 # http://localhost:4567/?day=friday&mood=excellent&group-projects=a-go
 $menu = [
@@ -47,6 +47,12 @@ get '/contact' do
 end
 
 post '/contact' do
+  # From Address & To Address -> SendGrid::Email
+  # Subject -> String
+  # Content -> SendGrid::Content
+  # Actual Email -> SendGrid::Mail
+
+
   @title = "Contact XYZ"
   # Write to database
   puts params.inspect
