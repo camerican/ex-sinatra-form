@@ -47,11 +47,27 @@ get '/contact' do
 end
 
 post '/contact' do
+  # to do: check email address valilidity
+
   # From Address & To Address -> SendGrid::Email
   # Subject -> String
   # Content -> SendGrid::Content
   # Actual Email -> SendGrid::Mail
+  #  Mail( from, subject, to, content )
+  mail = SendGrid::Mail.new( 
+    SendGrid::Email(email: "cam@nycda.com"),
+    "Thanks for contacting XYZ Inc!",
+    SendGrid::Email(email: params[:email] ),
+    SendGrid::Content(type: 'text/plain', value: <<-EMAILCONTENTS
+      Thanks for letting us know how you feel.
 
+      Our team will be in contact with you shortly.  For your records here's a copy of the feedback we recieved:
+---------------------------------
+      #{params[:message]}
+EMAILCONTENTS
+      )
+  )
+  sg = SendGrid::API.new( api_key: ENV['SENDGRID_API_KEY'] )
 
   @title = "Contact XYZ"
   # Write to database
