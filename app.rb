@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sendgrid-ruby'
+# include SendGrid
 
 # http://localhost:4567/?day=friday&mood=excellent&group-projects=a-go
 $menu = [
@@ -55,10 +56,10 @@ post '/contact' do
   # Actual Email -> SendGrid::Mail
   #  Mail( from, subject, to, content )
   mail = SendGrid::Mail.new( 
-    SendGrid::Email(email: "cam@nycda.com"),
+    SendGrid::Email.new(email: "cam@nycda.com"),
     "Thanks for contacting XYZ Inc!",
-    SendGrid::Email(email: params[:email] ),
-    SendGrid::Content(type: 'text/plain', value: <<-EMAILCONTENTS
+    SendGrid::Email.new(email: params[:email] ),
+    SendGrid::Content.new(type: 'text/plain', value: <<-EMAILCONTENTS
       Thanks for letting us know how you feel.
 
       Our team will be in contact with you shortly.  For your records here's a copy of the feedback we recieved:
@@ -69,9 +70,13 @@ EMAILCONTENTS
   )
   sg = SendGrid::API.new( api_key: ENV['SENDGRID_API_KEY'] )
 
+  response = sg.client.mail._('send').post(request_body: mail.to_json)
+
+  puts response.status_code
+  puts response.body
+  puts response.headers
+
   @title = "Contact XYZ"
-  # Write to database
-  puts params.inspect
   @msg = "Thanks for your submission"
   erb :contact
 end
