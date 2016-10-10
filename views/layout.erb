@@ -11,8 +11,8 @@
     <ul>
 <!--       <li><a href="/">Home</a></li>
       <li><a href="/contact">Contact</a></li> -->
-    <% $menu.each do |item| %>
-    <li><a href="<%= item[:href] %>"><%= item[:title] %></a></li>
+    <% $menu.each_with_index do |item,index| %>
+    <li<%= @route_index == index ? " class=\"active\"" : "" %>><a href="<%= item[:href] %>"><%= item[:title] %></a></li>
     <% end %>
     </ul>
   </nav>

@@ -18,6 +18,7 @@ $menu = [
 
 get '/' do
   @title = "XYZ Inc"
+  @route_index = getRouteIndex '/'
   puts "Params data below"
   puts params.inspect
   erb :home
@@ -43,11 +44,14 @@ post '/login' do
 end
 
 get '/contact' do
+  @route_index = getRouteIndex '/contact'
   @title = "Contact XYZ"
   erb :contact
 end
 
 post '/contact' do
+  @route_index = getRouteIndex '/contact'
+  @title = "Contact XYZ"
   # to do: check email address valilidity
 
   # From Address & To Address -> SendGrid::Email
@@ -76,15 +80,16 @@ EMAILCONTENTS
   puts response.body
   puts response.headers
 
-  @title = "Contact XYZ"
   @msg = "Thanks for your submission"
   erb :contact
 end
 
+get '/about' do
+  @title = "XYZ from AtoZ"
+  @route_index = getRouteIndex '/about' 
+  erb :about
+end
 
-
-
-
-
-
-
+def getRouteIndex route
+  $menu.index{ |c| c[:href] == route }
+end

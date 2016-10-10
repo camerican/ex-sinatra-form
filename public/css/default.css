@@ -14,3 +14,7 @@ nav li a,
 nav li a:visited {
   color: #fff;
 }
+li.active {
+  background-color: red;
+  color: #fff;
+}
