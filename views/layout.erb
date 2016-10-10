@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= @title %></title>
+  <link rel="stylesheet" type="text/css" href="css/default.css" />
+</head>
+<body>
+  <header>
+  <nav> 
+    <ul>
+<!--       <li><a href="/">Home</a></li>
+      <li><a href="/contact">Contact</a></li> -->
+    <% $menu.each do |item| %>
+    <li><a href="<%= item[:href] %>"><%= item[:title] %></a></li>
+    <% end %>
+    </ul>
+  </nav>
+  </header>
+<%= yield %>
+  <footer>&copy; XYZ Corp 2016</footer>
+</body>
+</html>

@@ -2,8 +2,21 @@ require 'sinatra'
 
 
 # http://localhost:4567/?day=friday&mood=excellent&group-projects=a-go
+$menu = [
+  {
+    href: '/',
+    title: 'Home'
+  },{
+    href: '/contact',
+    title: 'Contact'
+  },{
+    :href => '/about',
+    :title => "About"
+  }]
+
 
 get '/' do
+  @title = "XYZ Inc"
   puts "Params data below"
   puts params.inspect
   erb :home
@@ -29,10 +42,12 @@ post '/login' do
 end
 
 get '/contact' do
+  @title = "Contact XYZ"
   erb :contact
 end
 
 post '/contact' do
+  @title = "Contact XYZ"
   # Write to database
   puts params.inspect
   @msg = "Thanks for your submission"
