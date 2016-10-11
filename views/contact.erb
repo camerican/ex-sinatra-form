@@ -4,7 +4,7 @@
     <input type="text" name="name" placeholder="Your Name" /><br />
     <label for="email">eMail</label>
     <input <%= "class=\"error\" " if @error && @error.index('email') %>type="text" name="email" placeholder="Your email" /><br />
-  <textarea cols="30" rows="10" name="message"></textarea><br />
+    <textarea maxlength="255" cols="30" rows="10" name="message"></textarea><span id="message-remaining"></span> characters remaining <br />
   <input type="submit" />
   </form>
   <span id="console"><%= @msg %></span>
