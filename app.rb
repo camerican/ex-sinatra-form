@@ -53,7 +53,7 @@ post '/contact' do
   @route_index = getRouteIndex '/contact'
   @title = "Contact XYZ"
   # to do: check email address valilidity
-
+  @error = []
   if /^[^@]+@[^\.]{2,}\.[^\.]{2,}$/ =~ params[:email]
     # From Address & To Address -> SendGrid::Email
     # Subject -> String
@@ -65,6 +65,8 @@ post '/contact' do
       "Thanks for contacting XYZ Inc!",
       SendGrid::Email.new(email: params[:email] ),
       SendGrid::Content.new(type: 'text/plain', value: <<-EMAILCONTENTS
+        Dear #{params[:name]},
+
         Thanks for letting us know how you feel.
 
         Our team will be in contact with you shortly.  For your records here's a copy of the feedback we recieved:
@@ -78,11 +80,13 @@ post '/contact' do
     response = sg.client.mail._('send').post(request_body: mail.to_json)
 
     @msg = "Thanks for your submission"
+
     puts response.status_code
     puts response.body
     puts response.headers
   else
     @msg = "Something is wrong with your email, friend"
+    @error.push( 'email' )
   end
   # end email check
 
