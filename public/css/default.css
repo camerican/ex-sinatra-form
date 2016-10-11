@@ -18,3 +18,7 @@ li.active {
   background-color: red;
   color: #fff;
 }
+.error {
+  color: red;
+  border: 3px dashed red;
+}
